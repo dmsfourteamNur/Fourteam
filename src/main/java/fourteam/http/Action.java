@@ -112,13 +112,12 @@ public class Action {
 
   // instance es el Controller
   public void onMessage(
-    HttpExchange t,
-    Response response,
-    String path,
-    String data,
-    Object instance
-  )
-    throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, HttpException {
+      HttpExchange t,
+      Response response,
+      String path,
+      String data,
+      Object instance)
+      throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, HttpException {
     Parameter[] parameters = this.method.getParameters();
     // Class[] paramTypes = this.method.getParameterTypes();
     ArrayList<Object> values = new ArrayList<Object>();
@@ -162,19 +161,24 @@ public class Action {
       r.status = response.getCode();
       response.setBody(r.toString());
     } else {
-      response.setBody(resp.toString());
+      response.setBody(parseValueToString(resp, this.method.getReturnType()));
     }
   }
 
   public Object invoke(Object instance, Object... arg)
-    throws HttpException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+      throws HttpException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
     if (this.method == null) {
       return null;
     }
     if (!this.method.trySetAccessible()) {
       return null;
     }
+
     return this.method.invoke(instance, arg);
+  }
+
+  public String parseValueToString(Object value, Class<?> type) {
+    return JSON.getInstance().toJson(value);
   }
 
   public Object parseValue(Object value, Class<?> type) {
@@ -232,13 +236,12 @@ public class Action {
       }
       instance = type.getConstructor().newInstance();
     } catch (
-      InstantiationException
-      | IllegalAccessException
-      | IllegalArgumentException
-      | InvocationTargetException
-      | NoSuchMethodException
-      | SecurityException e
-    ) {
+        InstantiationException
+        | IllegalAccessException
+        | IllegalArgumentException
+        | InvocationTargetException
+        | NoSuchMethodException
+        | SecurityException e) {
       e.printStackTrace();
     }
     return null;
@@ -283,10 +286,9 @@ public class Action {
       Annotation annotation = parameter.getAnnotation(PathVariable.class);
       if (annotation instanceof PathVariable) {
         fourteam.swagger.parts.Parameter pars = new fourteam.swagger.parts.Parameter(
-          this.params.get(cant_params),
-          "path",
-          true
-        );
+            this.params.get(cant_params),
+            "path",
+            true);
         cant_params++;
         po.addParameter(pars);
       }

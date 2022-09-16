@@ -2,7 +2,9 @@ fourteam/massTransit/IMassTransit.class
 fourteam/mediator/NotificationHandler.class
 fourteam/http/HttpStatus.class
 fourteam/mediator/MediatorPlanRequest.class
+example/Controllers/TestController.class
 fourteam/extensions/IServiceCollection.class
+example/Controllers/TestController$TestIten.class
 fourteam/swagger/parts/Info.class
 fourteam/http/annotation/RequestMapping.class
 fourteam/db/IDbSet$BooleanFunction.class
@@ -20,6 +22,7 @@ fourteam/mediator/Response.class
 fourteam/JSON$LocalDateTimeSerializer.class
 fourteam/mediator/Mediator.class
 fourteam/swagger/parts/Tag.class
+example.class
 fourteam/db/IDbContext.class
 fourteam/http/annotation/PostMapping.class
 fourteam/config/Config.class
