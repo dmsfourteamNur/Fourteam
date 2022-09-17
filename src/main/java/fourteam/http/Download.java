@@ -1,4 +1,4 @@
-package fourteam.http;
+package Fourteam.http;
 
 import java.io.BufferedInputStream;
 import java.io.File;

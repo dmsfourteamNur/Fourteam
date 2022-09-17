@@ -1,14 +1,13 @@
-package fourteam.http;
+package Fourteam.http;
 
-import fourteam.console.console;
-import fourteam.extensions.DependencyInjection;
-import fourteam.http.Exception.HttpCodeException;
-import fourteam.http.Exception.HttpException;
-import fourteam.http.annotation.RequestMapping;
-import fourteam.http.annotation.RestController;
-import fourteam.mediator.IMediator;
-import fourteam.mediator.Mediator;
-
+import Fourteam.console.console;
+import Fourteam.extensions.DependencyInjection;
+import Fourteam.http.Exception.HttpCodeException;
+import Fourteam.http.Exception.HttpException;
+import Fourteam.http.annotation.RequestMapping;
+import Fourteam.http.annotation.RestController;
+import Fourteam.mediator.IMediator;
+import Fourteam.mediator.Mediator;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -33,7 +32,7 @@ public class Controller {
     if ((annotation instanceof RequestMapping)) {
       this.route = ((RequestMapping) annotation).value();
     }
-    console.log("[", "Rest", "]", "Controller loaded on route='",this.route,"'");
+    console.log("[", "Rest", "]", "Controller loaded on route='", this.route, "'");
     this.controller = controller;
     actions = new ArrayList<Action>();
     this.initMethods();
@@ -52,14 +51,18 @@ public class Controller {
       Action action = null;
       try {
         action = new Action(method);
-      } catch (HttpCodeException e) {
+      } catch (Exception e) {
+        if (e instanceof HttpCodeException) {
+          continue;
+        } else {
+          e.printStackTrace();
+        }
       }
       if (action == null) {
         continue;
       }
       actions.add(action);
-      // System.out.println("" + action.getType() + ":\t" + this.route +
-      // action.getRoute());
+      System.out.println("" + action.getType() + ":\t" + this.route + action.getRoute());
     }
     // System.out.println("--------------------------------------");
   }
@@ -68,9 +71,7 @@ public class Controller {
     return route;
   }
 
-  public void onMessage(HttpExchange t, String data, Response response)
-      throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException,
-      NoSuchMethodException, SecurityException, HttpException {
+  public void onMessage(HttpExchange t, String data, Response response) throws Exception {
     String path = t.getRequestURI().getPath();
     path = path.split("\\?")[0];
     path = path.substring(path.indexOf(route) + route.length());

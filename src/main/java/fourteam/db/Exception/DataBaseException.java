@@ -1,4 +1,4 @@
-package fourteam.db.Exception;
+package Fourteam.db.Exception;
 
 public class DataBaseException extends Exception {
 

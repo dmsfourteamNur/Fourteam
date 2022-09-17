@@ -4,7 +4,6 @@ fourteam/http/HttpStatus.class
 fourteam/mediator/MediatorPlanRequest.class
 example/Controllers/TestController.class
 fourteam/extensions/IServiceCollection.class
-example/Controllers/TestController$TestIten.class
 fourteam/swagger/parts/Info.class
 fourteam/http/annotation/RequestMapping.class
 fourteam/db/IDbSet$BooleanFunction.class

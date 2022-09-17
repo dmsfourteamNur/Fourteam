@@ -1,12 +1,11 @@
-package fourteam.massTransit;
+package Fourteam.massTransit;
 
 import com.google.gson.Gson;
 import com.rabbitmq.client.DeliverCallback;
-
-import fourteam.config.Config;
-import fourteam.extensions.DependencyInjection;
-import fourteam.mediator.IMediator;
-import fourteam.mediator.Notification;
+import Fourteam.config.Config;
+import Fourteam.extensions.DependencyInjection;
+import Fourteam.mediator.IMediator;
+import Fourteam.mediator.Notification;
 import java.io.IOException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -69,13 +68,14 @@ public class Consumers<T> {
       }
     };
     rabbit
-        .getChannel()
-        .basicConsume(
-            this.QueueName,
-            true,
-            callback,
-            oncancel -> {
-              System.out.println("Entro on cancel");
-            });
+      .getChannel()
+      .basicConsume(
+        this.QueueName,
+        true,
+        callback,
+        oncancel -> {
+          System.out.println("Entro on cancel");
+        }
+      );
   }
 }

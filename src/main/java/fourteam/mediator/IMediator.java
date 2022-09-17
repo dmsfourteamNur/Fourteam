@@ -1,7 +1,7 @@
-package fourteam.mediator;
+package Fourteam.mediator;
 
-import fourteam.http.Exception.HttpException;
-import fourteam.http.HttpStatus;
+import Fourteam.http.Exception.HttpException;
+import Fourteam.http.HttpStatus;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,15 +50,12 @@ public class IMediator implements Mediator {
   }
 
   @Override
-  public Response<Void> notify(Notification notification) {
+  public Response<Void> notify(Notification notification) throws Exception {
     Response<Void> response = new Response<>();
     MediatorPlanNotify plan;
-    try {
-      plan = new MediatorPlanNotify(NotificationHandler.class, "handle", notification.getClass(), this);
-      plan.invoke(notification);
-    } catch (Exception e) {
-      response.exception = (Exception) e;
-    }
+    plan =
+      new MediatorPlanNotify(NotificationHandler.class, "handle", notification.getClass(), this);
+    plan.invoke(notification);
     return response;
   }
 }

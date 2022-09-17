@@ -1,6 +1,6 @@
-package fourteam.mediator;
+package Fourteam.mediator;
 
-import fourteam.JSON;
+import Fourteam.JSON;
 
 public class Response<T> {
 

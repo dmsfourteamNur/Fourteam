@@ -1,8 +1,9 @@
-package fourteam.console;
+package Fourteam.console;
 
 import java.util.Date;
 
 public class console {
+
   private static final String ANSI_BLACK = "\u001B[30m";
   private static final String ANSI_RED = "\u001B[31m";
   private static final String ANSI_GREEN = "\u001B[32m";

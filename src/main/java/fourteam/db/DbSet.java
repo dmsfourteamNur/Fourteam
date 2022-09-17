@@ -1,9 +1,9 @@
-package fourteam.db;
+package Fourteam.db;
 
 // import core.DomainEvent;
 // import core.Entity;
-import fourteam.db.IDbSet.BooleanFunction;
-import fourteam.mediator.Notification;
+import Fourteam.db.IDbSet.BooleanFunction;
+import Fourteam.mediator.Notification;
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;

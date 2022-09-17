@@ -1,7 +1,7 @@
-package fourteam.mediator;
+package Fourteam.mediator;
 
-import fourteam.extensions.DependencyInjection;
-import fourteam.http.Exception.HttpException;
+import Fourteam.extensions.DependencyInjection;
+import Fourteam.http.Exception.HttpException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -44,8 +44,7 @@ public class MediatorPlanRequest<T, E> {
     throw new ClassNotFoundException("Handler not found. Did you forget to register this?");
   }
 
-  public E invoke(Request<T> request)
-    throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, HttpException {
+  public E invoke(Request<T> request) throws Exception {
     return (E) handleMethod.invoke(instance, request);
   }
 }

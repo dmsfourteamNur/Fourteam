@@ -1,8 +1,7 @@
-package fourteam.db;
+package Fourteam.db;
 
+import Fourteam.db.Exception.DataBaseException;
 import java.util.List;
-
-import fourteam.db.Exception.DataBaseException;
 
 public interface IDbContext extends IDbSet {
   public void Transaction() throws DataBaseException;

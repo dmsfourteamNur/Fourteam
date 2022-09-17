@@ -1,9 +1,9 @@
-package fourteam.http;
+package Fourteam.http;
 
-import fourteam.console.console;
-import fourteam.http.Exception.HttpException;
-import fourteam.swagger.parts.Document;
-import fourteam.swagger.parts.Path;
+import Fourteam.console.console;
+import Fourteam.http.Exception.HttpException;
+import Fourteam.swagger.parts.Document;
+import Fourteam.swagger.parts.Path;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -19,6 +19,7 @@ import org.yaml.snakeyaml.Yaml;
 public abstract class Rest {
 
   private static HashMap<String, Controller> controllers = new HashMap<String, Controller>();
+  public static int PORT = 80;
 
   public static void addController(Class RestController) {
     try {
@@ -28,20 +29,26 @@ public abstract class Rest {
       }
       controllers.put(controller.getRoute(), controller);
     } catch (Exception e) {
-      e.printStackTrace();
+      // e.printStackTrace();
     }
   }
 
   public static void start() {
-    start(80);
+    start(PORT);
   }
 
   public static void start(int port) {
+    PORT = port;
     HttpServer server;
     System.setProperty("org.eclipse.jetty.util.log.class", "org.eclipse.jetty.util.log.StdErrLog");
     System.setProperty("org.eclipse.jetty.LEVEL", "OFF");
     try {
-      console.warning("[", Rest.class.getSimpleName(), "]", "Trying to start the server on port " + port);
+      console.warning(
+        "[",
+        Rest.class.getSimpleName(),
+        "]",
+        "Trying to start the server on port " + port
+      );
       server = HttpServer.create(new InetSocketAddress(port), 0);
       HttpContext context = server.createContext("/");
       context.setHandler(Rest::RestHandler);
@@ -85,28 +92,40 @@ public abstract class Rest {
       } catch (IOException e) {
         response.setCode(HttpStatus.BAD_GATEWAY);
         response.setBody("Controller not found");
-        e.printStackTrace();
       }
       return;
     }
     try {
       controller.onMessage(t, data, response);
-    } catch (
-        InstantiationException
-        | IllegalAccessException
-        | IllegalArgumentException
-        | InvocationTargetException
-        | NoSuchMethodException
-        | SecurityException
-        | HttpException e) {
-      if (e.getCause() instanceof HttpException) {
-        response.setCode(((HttpException) e.getCause()).getCode());
-        response.setBody(((HttpException) e.getCause()).getMessage());
+    } catch (Exception e) {
+      e = getCauseRec(e);
+      // if (e.getStackTrace().length == 0) {
+      // System.out.println("No more stack trace after thrown.");
+      // return;
+      // }
+      // e.getCause().printStackTrace();
+      // // e.printStackTrace();
+      if (e instanceof HttpException) {
+        response.setCode(((HttpException) e).getCode());
+        response.setBody(((HttpException) e).getMessage());
       } else {
-        response.setBody("Internal server error");
+        response.setBody(e.getMessage());
         response.setCode(HttpStatus.INTERNAL_SERVER_ERROR);
+        e.printStackTrace();
       }
     }
+  }
+
+  public static Exception getCauseRec(Exception e) {
+    if (e instanceof HttpException) {
+      return e;
+    }
+
+    Exception a = (Exception) e.getCause();
+    if (a == null) {
+      return e;
+    }
+    return getCauseRec(a);
   }
 
   public static void createSwagger() {
@@ -116,12 +135,12 @@ public abstract class Rest {
       String tag = controller.getRoute();
       doc.addTag(tag, key + "_descripcion");
       controller
-          .getActions()
-          .iterator()
-          .forEachRemaining(action -> {
-            Path po = action.getPathSwagger(controller, tag);
-            doc.addPath(po);
-          });
+        .getActions()
+        .iterator()
+        .forEachRemaining(action -> {
+          Path po = action.getPathSwagger(controller, tag);
+          doc.addPath(po);
+        });
     }
     PrintWriter writer;
     try {

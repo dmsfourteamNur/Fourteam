@@ -1,3 +1,3 @@
-package fourteam.db;
+package Fourteam.db;
 
 public class ModelBuilder {}

@@ -1,9 +1,9 @@
-package fourteam.extensions;
+package Fourteam.extensions;
 
-import fourteam.massTransit.IMassTransit;
-import fourteam.massTransit.IPublishEndpoint;
-import fourteam.mediator.IMediator;
-import fourteam.mediator.Mediator;
+import Fourteam.massTransit.IMassTransit;
+import Fourteam.massTransit.IPublishEndpoint;
+import Fourteam.mediator.IMediator;
+import Fourteam.mediator.Mediator;
 import java.util.HashMap;
 
 public class IServiceCollection {

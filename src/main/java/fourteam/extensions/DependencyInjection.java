@@ -1,6 +1,6 @@
-package fourteam.extensions;
+package Fourteam.extensions;
 
-import fourteam.mediator.IMediator;
+import Fourteam.mediator.IMediator;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;

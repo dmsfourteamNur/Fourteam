@@ -1,16 +1,16 @@
-package fourteam.http;
+package Fourteam.http;
 
-import fourteam.JSON;
-import fourteam.http.Exception.HttpCodeException;
-import fourteam.http.Exception.HttpException;
-import fourteam.http.annotation.DeleteMapping;
-import fourteam.http.annotation.GetMapping;
-import fourteam.http.annotation.PathVariable;
-import fourteam.http.annotation.PostMapping;
-import fourteam.http.annotation.PutMapping;
-import fourteam.http.annotation.RequestBody;
-import fourteam.mediator.Request;
-import fourteam.swagger.parts.Path;
+import Fourteam.JSON;
+import Fourteam.http.Exception.HttpCodeException;
+import Fourteam.http.Exception.HttpException;
+import Fourteam.http.annotation.DeleteMapping;
+import Fourteam.http.annotation.GetMapping;
+import Fourteam.http.annotation.PathVariable;
+import Fourteam.http.annotation.PostMapping;
+import Fourteam.http.annotation.PutMapping;
+import Fourteam.http.annotation.RequestBody;
+import Fourteam.mediator.Request;
+import Fourteam.swagger.parts.Path;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -38,7 +38,7 @@ public class Action {
   private String route;
   private ArrayList<String> params;
 
-  public Action(Method method) throws HttpCodeException {
+  public Action(Method method) throws Exception {
     this.method = method;
     Annotation annotation = method.getAnnotation(GetMapping.class);
     if (annotation instanceof GetMapping) {
@@ -68,7 +68,9 @@ public class Action {
       this.type = ActionType.DELETE;
       return;
     }
-    throw new HttpCodeException("El metodo no tiene la anotacion GetMapping o PostMapping");
+    throw new HttpCodeException(
+      "El metodo no tiene la anotacion GetMapping o PostMapping " + method.getName()
+    );
   }
 
   private static final Pattern p = Pattern.compile("\\{(.*?)\\}");
@@ -112,12 +114,12 @@ public class Action {
 
   // instance es el Controller
   public void onMessage(
-      HttpExchange t,
-      Response response,
-      String path,
-      String data,
-      Object instance)
-      throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, HttpException {
+    HttpExchange t,
+    Response response,
+    String path,
+    String data,
+    Object instance
+  ) throws Exception {
     Parameter[] parameters = this.method.getParameters();
     // Class[] paramTypes = this.method.getParameterTypes();
     ArrayList<Object> values = new ArrayList<Object>();
@@ -156,8 +158,8 @@ public class Action {
     Object resp;
     resp = invoke(instance, values.toArray());
     response.setCode(HttpStatus.OK);
-    if (resp instanceof fourteam.mediator.Response) {
-      fourteam.mediator.Response r = (fourteam.mediator.Response) resp;
+    if (resp instanceof Fourteam.mediator.Response) {
+      Fourteam.mediator.Response r = (Fourteam.mediator.Response) resp;
       r.status = response.getCode();
       response.setBody(r.toString());
     } else {
@@ -165,8 +167,7 @@ public class Action {
     }
   }
 
-  public Object invoke(Object instance, Object... arg)
-      throws HttpException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+  public Object invoke(Object instance, Object... arg) throws Exception {
     if (this.method == null) {
       return null;
     }
@@ -181,7 +182,7 @@ public class Action {
     return JSON.getInstance().toJson(value);
   }
 
-  public Object parseValue(Object value, Class<?> type) {
+  public Object parseValue(Object value, Class<?> type) throws Exception {
     if (type == String.class) {
       return value.toString();
     }
@@ -221,29 +222,20 @@ public class Action {
     return JSON.getInstance().fromJson(value.toString(), type);
   }
 
-  public Object createRequest(Class type, Object value) {
+  public Object createRequest(Class type, Object value) throws Exception {
     Object instance;
-    try {
-      Constructor[] constructors = type.getConstructors();
-      for (Constructor constructor : constructors) {
-        ArrayList<Object> values = new ArrayList<>();
-        Class[] paramTypes = constructor.getParameterTypes();
-        for (Class paramt : paramTypes) {
-          values.add(JSON.getInstance().fromJson(value.toString(), paramt));
-        }
-        instance = constructor.newInstance(values.toArray());
-        return instance;
+    Constructor[] constructors = type.getConstructors();
+    for (Constructor constructor : constructors) {
+      ArrayList<Object> values = new ArrayList<>();
+      Class[] paramTypes = constructor.getParameterTypes();
+      for (Class paramt : paramTypes) {
+        values.add(JSON.getInstance().fromJson(value.toString(), paramt));
       }
-      instance = type.getConstructor().newInstance();
-    } catch (
-        InstantiationException
-        | IllegalAccessException
-        | IllegalArgumentException
-        | InvocationTargetException
-        | NoSuchMethodException
-        | SecurityException e) {
-      e.printStackTrace();
+      instance = constructor.newInstance(values.toArray());
+      return instance;
     }
+    instance = type.getConstructor().newInstance();
+
     return null;
   }
 
@@ -285,16 +277,17 @@ public class Action {
     for (Parameter parameter : parameters) {
       Annotation annotation = parameter.getAnnotation(PathVariable.class);
       if (annotation instanceof PathVariable) {
-        fourteam.swagger.parts.Parameter pars = new fourteam.swagger.parts.Parameter(
-            this.params.get(cant_params),
-            "path",
-            true);
+        Fourteam.swagger.parts.Parameter pars = new Fourteam.swagger.parts.Parameter(
+          this.params.get(cant_params),
+          "path",
+          true
+        );
         cant_params++;
         po.addParameter(pars);
       }
       annotation = parameter.getAnnotation(RequestBody.class);
       if (annotation instanceof RequestBody) {
-        po.setRequestBody(new fourteam.swagger.parts.RequestBody());
+        po.setRequestBody(new Fourteam.swagger.parts.RequestBody());
       }
     }
     po.setOperationId(tag + "_" + name);

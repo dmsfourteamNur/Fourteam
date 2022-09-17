@@ -1,6 +1,6 @@
-package fourteam.mediator;
+package Fourteam.mediator;
 
-import fourteam.extensions.DependencyInjection;
+import Fourteam.extensions.DependencyInjection;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -23,15 +23,11 @@ public class MediatorPlanNotify {
     String handlerMethodName,
     Class<?> messageType,
     IMediator mediator
-  ) {
+  ) throws Exception {
     this.mediator = mediator;
     handlerInstanceBuilder = getBean(handlerType, messageType);
-    try {
-      instance = DependencyInjection.createInstance(handlerInstanceBuilder, mediator);
-      handleMethod = handlerInstanceBuilder.getMethod(handlerMethodName, Notification.class);
-    } catch (Exception e) {
-      System.out.println("Not found notification handler for " + messageType.getName());
-    }
+    instance = DependencyInjection.createInstance(handlerInstanceBuilder, mediator);
+    handleMethod = handlerInstanceBuilder.getMethod(handlerMethodName, Notification.class);
   }
 
   private Class getBean(Class<?> handlerType, Class<?> messageType) {

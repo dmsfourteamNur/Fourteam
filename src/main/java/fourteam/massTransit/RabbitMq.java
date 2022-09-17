@@ -1,11 +1,9 @@
-package fourteam.massTransit;
+package Fourteam.massTransit;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
-
-import fourteam.console.console;
-
+import Fourteam.console.console;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
@@ -28,9 +26,14 @@ public class RabbitMq {
 
   public void newConnection() throws IOException, TimeoutException {
     ConnectionFactory factory = new ConnectionFactory();
-    console.warning("[", this.getClass().getSimpleName(), "]", "Trying to connect with host=" + this.Host,
-        "user=" + this.User,
-        "password=" + this.Password);
+    console.warning(
+      "[",
+      this.getClass().getSimpleName(),
+      "]",
+      "Trying to connect with host=" + this.Host,
+      "user=" + this.User,
+      "password=" + this.Password
+    );
     factory.setHost(this.Host);
     factory.setUsername(this.User);
     factory.setPassword(this.Password);

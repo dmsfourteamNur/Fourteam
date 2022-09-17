@@ -1,3 +1,3 @@
-package fourteam.mediator;
+package Fourteam.mediator;
 
 public interface Request<T> {}

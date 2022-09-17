@@ -1,7 +1,7 @@
-package fourteam.db;
+package Fourteam.db;
 
-import fourteam.db.Exception.DataBaseException;
-import fourteam.mediator.Notification;
+import Fourteam.db.Exception.DataBaseException;
+import Fourteam.mediator.Notification;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +31,7 @@ public abstract class DbContext implements IDbContext {
   public void instanceDbSet() {
     Field[] fields = _dbContextClass.getFields();
     for (Field field : fields) {
-      if (field.getType().getName().contains(fourteam.db.DbSet.class.getName())) {
+      if (field.getType().getName().contains(Fourteam.db.DbSet.class.getName())) {
         try {
           DbSet db = new DbSet<>(this, field);
           field.set(this, db);

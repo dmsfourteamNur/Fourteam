@@ -1,7 +1,7 @@
-package fourteam.massTransit;
+package Fourteam.massTransit;
 
 import com.google.gson.Gson;
-import fourteam.mediator.Notification;
+import Fourteam.mediator.Notification;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 

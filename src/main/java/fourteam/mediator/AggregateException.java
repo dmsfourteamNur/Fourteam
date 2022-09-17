@@ -1,4 +1,4 @@
-package fourteam.mediator;
+package Fourteam.mediator;
 
 import java.util.List;
 

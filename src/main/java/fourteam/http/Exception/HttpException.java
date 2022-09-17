@@ -1,4 +1,4 @@
-package fourteam.http.Exception;
+package Fourteam.http.Exception;
 
 public class HttpException extends Exception {
 

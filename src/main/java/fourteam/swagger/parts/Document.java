@@ -1,5 +1,6 @@
-package fourteam.swagger.parts;
+package Fourteam.swagger.parts;
 
+import Fourteam.http.Rest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +22,18 @@ public class Document {
     servers = new ArrayList<Server>();
     paths = new ArrayList<Path>();
     tags = new ArrayList<Tag>();
-    servers.add(new Server("http://localhost/api/"));
+    String url = "";
+    if (Rest.PORT == 443) {
+      url += "https://";
+    } else {
+      url += "http://";
+    }
+    url += "localhost";
+    if (Rest.PORT != 80 && Rest.PORT != 443) {
+      url += ":" + Rest.PORT;
+    }
+    url += "/api/";
+    servers.add(new Server(url));
     // paths.add(new Path("/", "get", "usuario"));
   }
 

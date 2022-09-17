@@ -1,6 +1,6 @@
-package fourteam.mediator;
+package Fourteam.mediator;
 
-import fourteam.http.Exception.HttpException;
+import Fourteam.http.Exception.HttpException;
 import java.lang.reflect.InvocationTargetException;
 
 public interface Mediator {

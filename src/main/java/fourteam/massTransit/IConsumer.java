@@ -1,4 +1,4 @@
-package fourteam.massTransit;
+package Fourteam.massTransit;
 
 public abstract class IConsumer<T> {
 

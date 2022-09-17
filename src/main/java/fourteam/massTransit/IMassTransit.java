@@ -1,4 +1,4 @@
-package fourteam.massTransit;
+package Fourteam.massTransit;
 
 import java.io.IOException;
 import java.util.ArrayList;

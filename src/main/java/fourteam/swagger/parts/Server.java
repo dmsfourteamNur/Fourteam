@@ -1,4 +1,4 @@
-package fourteam.swagger.parts;
+package Fourteam.swagger.parts;
 
 import java.util.HashMap;
 import org.json.JSONArray;

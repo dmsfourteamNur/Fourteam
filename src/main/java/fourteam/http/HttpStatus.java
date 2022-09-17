@@ -1,4 +1,4 @@
-package fourteam.http;
+package Fourteam.http;
 
 public class HttpStatus {
 

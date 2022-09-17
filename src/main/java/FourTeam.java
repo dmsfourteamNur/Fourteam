@@ -1,24 +1,24 @@
-import fourteam.config.Config;
-import fourteam.console.console;
+import Fourteam.config.Config;
+import Fourteam.console.console;
 
 public class FourTeam {
 
   public static Class[] classes = {
-      // http
-      fourteam.http.Rest.class,
-      // mediator
-      fourteam.mediator.AggregateException.class,
-      fourteam.mediator.IMediator.class,
-      fourteam.mediator.NotificationHandler.class,
-      fourteam.mediator.Notification.class,
-      fourteam.mediator.Request.class,
-      fourteam.mediator.Response.class,
-      // Class
-      fourteam.extensions.IServiceCollection.class,
-      // DB
-      fourteam.db.DbContext.class,
-      fourteam.db.DbSet.class,
-      fourteam.db.ModelBuilder.class,
+    // http
+    Fourteam.http.Rest.class,
+    // mediator
+    Fourteam.mediator.AggregateException.class,
+    Fourteam.mediator.IMediator.class,
+    Fourteam.mediator.NotificationHandler.class,
+    Fourteam.mediator.Notification.class,
+    Fourteam.mediator.Request.class,
+    Fourteam.mediator.Response.class,
+    // Class
+    Fourteam.extensions.IServiceCollection.class,
+    // DB
+    Fourteam.db.DbContext.class,
+    Fourteam.db.DbSet.class,
+    Fourteam.db.ModelBuilder.class,
   };
 
   public static void AddFourTeam() {
@@ -32,6 +32,9 @@ public class FourTeam {
       System.out.print(clas.getName() + "\r");
     }
     console.succes("[", FourTeam.class.getSimpleName(), "]", "Dependecies load succesfull!");
+  }
 
+  public static void main(String[] args) {
+    AddFourTeam();
   }
 }

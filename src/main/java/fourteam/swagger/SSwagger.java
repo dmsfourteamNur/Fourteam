@@ -1,6 +1,6 @@
-package fourteam.swagger;
+package Fourteam.swagger;
 
-import fourteam.swagger.parts.Document;
+import Fourteam.swagger.parts.Document;
 
 public class SSwagger {
 
