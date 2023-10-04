@@ -45,16 +45,27 @@ public class IMediator implements Mediator {
     Response<E> response = new Response<>();
     MediatorPlanRequest<T, E> plan;
     plan = new MediatorPlanRequest<>(RequestHandler.class, "handle", request.getClass(), this);
+    if(plan == null) return null;
     response.data = plan.invoke(request);
     return response;
   }
 
+  // @Override
+  // public <T> Response<Void> notify(Notification<T> notification) throws Exception {
+  //   Response<Void> response = new Response<>();
+  //   MediatorPlanNotify plan;
+  //   plan = new MediatorPlanNotify(NotificationHandler.class, "handle", notification, this);
+  //   if(plan == null) return null;
+  //   plan.invoke(notification);
+  //   return response;
+  // }
+
   @Override
-  public Response<Void> notify(Notification notification) throws Exception {
+  public Response notify(Notification notification) throws Exception {
     Response<Void> response = new Response<>();
     MediatorPlanNotify plan;
-    plan =
-      new MediatorPlanNotify(NotificationHandler.class, "handle", notification.getClass(), this);
+    plan = new MediatorPlanNotify(NotificationHandler.class, "handle", notification, this);
+    if(plan == null) return null;
     plan.invoke(notification);
     return response;
   }

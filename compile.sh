@@ -17,6 +17,6 @@ cd ../
 jar cfM "$name.jar" -C bin/ . # //TODOD  -C classPath
 rm -fr bin
 
-scp "$name.jar" "root@147.182.209.156:/root/fourteam/nginx/html/downloads/jars/${name}/${name}-latest.jar"
-scp "$name.jar" "root@147.182.209.156:/root/fourteam/nginx/html/downloads/jars/${name}/${name}-${version}.jar"
+# scp "$name.jar" "root@147.182.209.156:/root/fourteam/nginx/html/downloads/jars/${name}/${name}-latest.jar"
+# scp "$name.jar" "root@147.182.209.156:/root/fourteam/nginx/html/downloads/jars/${name}/${name}-${version}.jar"
 

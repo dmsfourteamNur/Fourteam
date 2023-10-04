@@ -34,7 +34,5 @@ public class FourTeam {
     console.succes("[", FourTeam.class.getSimpleName(), "]", "Dependecies load succesfull!");
   }
 
-  public static void main(String[] args) {
-    AddFourTeam();
-  }
+
 }

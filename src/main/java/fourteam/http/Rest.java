@@ -44,11 +44,10 @@ public abstract class Rest {
     System.setProperty("org.eclipse.jetty.LEVEL", "OFF");
     try {
       console.warning(
-        "[",
-        Rest.class.getSimpleName(),
-        "]",
-        "Trying to start the server on port " + port
-      );
+          "[",
+          Rest.class.getSimpleName(),
+          "]",
+          "Trying to start the server on port " + port);
       server = HttpServer.create(new InetSocketAddress(port), 0);
       HttpContext context = server.createContext("/");
       context.setHandler(Rest::RestHandler);
@@ -61,6 +60,19 @@ public abstract class Rest {
   }
 
   private static void RestHandler(HttpExchange t) throws IOException {
+
+    t.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
+    if (t.getRequestMethod().equalsIgnoreCase("OPTIONS")) {
+      t.getResponseHeaders().add("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+      //algo
+      t.getResponseHeaders().add("Access-Control-Allow-Headers", "*");
+      t.sendResponseHeaders(200, 0);
+      return;
+    }
+    // t.getResponseHeaders().add("Access-Control-Allow-Headers", "*");
+    // t.getResponseHeaders().add("Access-Control-Allow-Methods", "POST, GET,
+    // OPTIONS, PUT, DELETE");
+    System.out.println(t.getRequestMethod());
     Response response = new Response();
     StringBuilder sb = new StringBuilder();
     InputStream ios = t.getRequestBody();
@@ -135,12 +147,12 @@ public abstract class Rest {
       String tag = controller.getRoute();
       doc.addTag(tag, key + "_descripcion");
       controller
-        .getActions()
-        .iterator()
-        .forEachRemaining(action -> {
-          Path po = action.getPathSwagger(controller, tag);
-          doc.addPath(po);
-        });
+          .getActions()
+          .iterator()
+          .forEachRemaining(action -> {
+            Path po = action.getPathSwagger(controller, tag);
+            doc.addPath(po);
+          });
     }
     PrintWriter writer;
     try {

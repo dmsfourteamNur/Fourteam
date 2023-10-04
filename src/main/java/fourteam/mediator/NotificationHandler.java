@@ -1,5 +1,5 @@
 package Fourteam.mediator;
 
 public interface NotificationHandler<T> {
-  public void handle(Notification notification);
+  public void handle(T notification);
 }
